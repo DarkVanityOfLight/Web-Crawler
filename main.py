@@ -49,7 +49,7 @@ def get_cmd_input():
     valid = False    
     while not valid:
         try:
-            depth = int(input("[+] How deep should the spiders go, 0 is unlimeted"))
+            depth = int(input("[+] How deep should the spiders go, 0 is unlimeted\n"))
             valid = True
         except:
             print("That's not an integer")
