@@ -4,15 +4,18 @@ from multiprocessing import Process
 
 
 class File_writer_Thread(Thread):
-    def __init__(self, queue_writer_reader):
+    def __init__(self, queue_writer_reader, max_counter):
         super().__init__(daemon=True)
         self.file = open("links.lst", "a")
         self.queue_writer_reader = queue_writer_reader
         self.writing = True
+        self.max_counter = max_counter
+        self.counter = 0
 
     def write(self, link):
         self.file.write("{}\n".format(link))
         self.file.flush()
+        self.counter += 1
 
     def get(self):
         link = self.queue_writer_reader.get_new_link_to_write()
@@ -25,6 +28,10 @@ class File_writer_Thread(Thread):
         loop_without_link = 0
 
         while self.writing:
+            if self.max_counter > 0 and self.counter > self.max_counter:
+                self.queue_writer_reader.stop_crawlers()
+                self.stop_living()
+
             if self.queue_writer_reader.new_link_to_write_available:
                 self.get()
                 loop_without_link = 0

@@ -5,6 +5,7 @@ class Queue_writer_reader:
     def __init__(self, links_to_visit):
         self.links_to_write = Queue()
         self.links_to_visit = links_to_visit
+        self.stop_crawling = False
 
     def get_new_link_to_write(self):
         return self.links_to_write.get()
@@ -30,3 +31,5 @@ class Queue_writer_reader:
         else:
             return True
 
+    def stop_crawlers(self):
+        self.stop_crawling = True

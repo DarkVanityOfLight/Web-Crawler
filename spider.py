@@ -186,4 +186,7 @@ class Process_spider(Process):
 
                     else:
                         print("That was not E, G or W, try again")
+            if self.queue_writer_reader.stop_crawling == True:
+                print("[*] Max depth was reached, killing spider {}".format(self._name))
+                self.stop_living()
         exit(0)

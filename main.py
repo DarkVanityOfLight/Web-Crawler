@@ -46,12 +46,20 @@ def get_cmd_input():
     for _ in range(number):
         names.append(str(input("[+] Name your little crawler/s\n")))
 
+    valid = False    
+    while not valid:
+        try:
+            depth = int(input("[+] How deep should the spiders go, 0 is unlimeted"))
+            valid = True
+        except:
+            print("That's not an integer")
+
     system("clear")
     print("[+] Hit CTRL-C\n    to exit")
-    return t_or_p, number, start_point, names
+    return t_or_p, number, start_point, names, depth
 
 
-def create(t_or_p, number, start_point, names):
+def create(t_or_p, number, start_point, names, depth):
     crawlers = {}
 
     queue = Queue()
@@ -60,7 +68,7 @@ def create(t_or_p, number, start_point, names):
 
 
     if t_or_p.upper() == "T":
-        file_writer = File_writer_Thread(queue_writer_reader)
+        file_writer = File_writer_Thread(queue_writer_reader, depth)
         for i in range(number):
             crawlers[names[i]] = Thread_spider(queue_writer_reader, names[i])
 
@@ -78,9 +86,9 @@ def main():
     threads = []
 
     if get_arg_input() == None:
-        t_or_p, number, start_point, names = get_cmd_input()
+        t_or_p, number, start_point, names, depth = get_cmd_input()
         crawlers, queue_writer_reader, file_writer = create(
-            t_or_p, number, start_point, names)
+            t_or_p, number, start_point, names, depth)
         crawler_threads = [crawlers[i] for i in crawlers.keys()]
         threads = threads + crawler_threads
         threads.append(file_writer)
