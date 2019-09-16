@@ -19,13 +19,13 @@ class Queue_writer_reader:
         self.links_to_write.put(link)
 
     def new_link_to_write_available(self):
-        if self.links_to_write.all_tasks_done:
+        if self.links_to_write.empty():
             return False
         else:
             return True
 
     def new_link_to_visit_available(self):
-        if self.links_to_visit.all_tasks_done:
+        if self.links_to_visit.empty() == True:
             return False
         else:
             return True
