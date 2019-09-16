@@ -3,7 +3,7 @@ from queue_writer_reader import Queue_writer_reader
 from sys import exit
 from os import system
 from time import sleep
-from file_writer import File_writer
+from file_writer import File_writer_Thread, File_writer_Process
 from queue import Queue
 from re import match
 
@@ -54,14 +54,16 @@ def create(t_or_p, number, start_point, names):
     queue = Queue()
     queue.put(start_point)
     queue_writer_reader = Queue_writer_reader(queue)
-    file_writer = File_writer(queue_writer_reader)
+
 
     if t_or_p.upper() == "T":
+        file_writer = File_writer_Thread(queue_writer_reader)
         for i in range(number):
             crawlers[names[i]] = Thread_spider(queue_writer_reader, names[i])
 
         return crawlers, queue_writer_reader, file_writer
     else:
+        file_writer = File_writer_Process(queue_writer_reader)
         for i in range(number):
             crawlers[names[i]] = Process_spider(queue_writer_reader, names[i])
             return crawlers, queue_writer_reader, file_writer
