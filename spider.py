@@ -96,6 +96,7 @@ class Thread_spider(Thread):
                         print("That was not E, G or W, try again")
         exit(0)
 
+
 class Process_spider(Process):
     def __init__(self, queue_writer_reader, _name):
         super().__init__(daemon=True)
@@ -138,6 +139,9 @@ class Process_spider(Process):
         print("[*] {} died".format(self._name))
         self.crawling = False
 
+    def isAlive(self):
+        return True
+
     def run(self):
         loops_without_link = 0
         while self.crawling:
@@ -163,8 +167,7 @@ class Process_spider(Process):
             if loops_without_link >= 10:
                 valid = False
                 while not valid:
-                    a = str(input(
-                        "[*] {} got no link for 10 loops, would you like to [E]nd, [G]ive a new link or [W]ait another 10 loops".format(self._name)))
+                    a = str(input("[*] {} got no link for 10 loops, would you like to [E]nd, [G]ive a new link or [W]ait another 10 loops\n".format(self._name)))
                     if a.upper() == "E":
                         self.stop_living()
                     elif a.upper() == "G":

@@ -27,12 +27,14 @@ def get_cmd_input():
         else:
             print("[+] {} is not T or P, try again")
 
+    valid = False
     while not valid:
         try:
             number = int(input("[+] How many crawlers do you want?\n"))
             valid = True
         except:
             print("[+] That's not a number")
+
     valid = False
     while not valid:
         start_point = str(input("[+] Start link(has to start with http[s])\n"))
@@ -45,6 +47,7 @@ def get_cmd_input():
         names.append(str(input("[+] Name your little crawler/s\n")))
 
     system("clear")
+    print("[+] Hit CTRL-C\n    to exit")
     return t_or_p, number, start_point, names
 
 
@@ -70,7 +73,6 @@ def create(t_or_p, number, start_point, names):
 
 
 def main():
-    print("[+] Hit CTRL-C\n   to exit")
 
     running = True
     threads = []

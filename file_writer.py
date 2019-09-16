@@ -34,7 +34,8 @@ class File_writer_Thread(Thread):
                 if loop_without_link == 10:
                     valid = False
                     while not valid:
-                        q = str(input("[*] There was no link to write for 10 loops,\n    would you like to [S]top or [W]ait another 10 loops"))
+                        q = str(input(
+                            "[*] There was no link to write for 10 loops,\n    would you like to [S]top or [W]ait another 10 loops"))
                         if q.upper() == "S":
                             self.stop_living()
                             valid = True
@@ -43,6 +44,7 @@ class File_writer_Thread(Thread):
                             valid = True
                         else:
                             print("[+] That was not S or W, try again")
+
 
 class File_writer_Process(Process):
     def __init__(self, queue_writer_reader):
@@ -62,6 +64,9 @@ class File_writer_Process(Process):
     def stop_living(self):
         self.writing = False
 
+    def isAlive(self):
+        return True
+
     def run(self):
         loop_without_link = 0
 
@@ -75,7 +80,8 @@ class File_writer_Process(Process):
                 if loop_without_link == 10:
                     valid = False
                     while not valid:
-                        q = str(input("[*] There was no link to write for 10 loops,\n    would you like to [S]top or [W]ait another 10 loops"))
+                        q = str(input(
+                            "[*] There was no link to write for 10 loops,\n    would you like to [S]top or [W]ait another 10 loops"))
                         if q.upper() == "S":
                             self.stop_living()
                             valid = True
@@ -84,4 +90,3 @@ class File_writer_Process(Process):
                             valid = True
                         else:
                             print("[+] That was not S or W, try again")
-
