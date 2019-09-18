@@ -14,7 +14,10 @@ class Queue_writer_reader:
         return self.links_to_visit.get()
 
     def put_new_link_to_visit(self, link):
-        self.links_to_visit.put(link)
+        with open("link.lst", "r") as f:
+            links = f.readlines()
+            if link+"\n" not in links:
+                self.links_to_visit.put(link)
 
     def put_new_link_to_write(self, link):
         self.links_to_write.put(link)
